@@ -1,0 +1,19 @@
+body { font-family: "Segoe UI", Arial, sans-serif; }
+.sidebar .nav-link.active,
+.sidebar .nav-link:hover {
+  background: var(--brand-color);
+  color: #000 !important;
+}
+
+:root {
+  --brand-color: <?= BRAND_COLOR ?>;
+}
+
+.btn-brand {
+  background: var(--brand-color);
+  color: #000;
+}
+.btn-brand:hover {
+  background: #e6b818;
+  color: #000;
+}
