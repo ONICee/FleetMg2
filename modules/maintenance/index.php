@@ -11,7 +11,7 @@ $rows = $q->fetchAll();
 include __DIR__ . '/../../includes/header.php';
 ?>
 <h2>All Maintenance Records</h2>
-<table class="table table-bordered table-sm">
+<table class="table table-bordered table-sm datatable">
   <thead class="table-dark">
     <tr>
       <th>Date</th><th>Vehicle</th><th>Type</th><th>Description</th><th>Next Due</th>
