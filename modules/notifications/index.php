@@ -27,7 +27,10 @@
       <thead class="table-light"><tr><th>Message</th><th>Date</th></tr></thead>
       <tbody>
         <?php foreach($arr as $n): ?>
-        <tr><td><?= sanitize($n['message']) ?></td><td><?= $n['created_at'] ?></td></tr>
+        <?php
+          $rowClass = $type=='maintenance' ? 'table-warning' : ($type=='fleet' ? 'table-info' : 'table-light');
+        ?>
+        <tr class="<?= $rowClass ?>"><td><?= sanitize($n['message']) ?></td><td><?= $n['created_at'] ?></td></tr>
         <?php endforeach; ?>
       </tbody>
     </table>
