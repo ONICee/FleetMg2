@@ -59,4 +59,4 @@ require_once __DIR__ . '/../config/security.php';
   </nav>
   <div class="d-flex">
     <?php include __DIR__ . '/sidebar.php'; ?>
-    <main class="flex-grow-1 p-4" style="margin-top:56px;">
+    <main class="content flex-grow-1">

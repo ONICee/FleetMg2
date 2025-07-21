@@ -1,4 +1,8 @@
-body { font-family: "Segoe UI", Arial, sans-serif; }
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background:#f7f8fa;
+}
+
 .sidebar .nav-link.active,
 .sidebar .nav-link:hover {
   background: var(--brand-color);
@@ -16,4 +20,20 @@ body { font-family: "Segoe UI", Arial, sans-serif; }
 .btn-brand:hover {
   background: #e6b818;
   color: #000;
+}
+
+.content {
+  margin-top:56px; /* navbar height */
+  margin-left:220px; /* sidebar width */
+  padding:1.5rem;
+}
+
+.card-stat {
+  border-left:4px solid var(--brand-color);
+  box-shadow:0 0 .5rem rgba(0,0,0,.05);
+}
+
+.table thead th {
+  background:#000;
+  color:#fff;
 }
