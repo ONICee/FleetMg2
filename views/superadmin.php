@@ -80,22 +80,6 @@ $maintOver  = $pdo->query("SELECT COUNT(*) FROM maintenance WHERE next_date IS N
   </div>
 </div>
 
-<div class="card mt-4 chart-card">
-  <div class="card-header bg-light">Fleet Serviceability Chart</div>
-  <div class="card-body d-flex justify-content-center">
-    <canvas id="statusChart" width="220" height="220" style="max-width:220px;"></canvas>
-  </div>
-</div>
-
-<script defer>
-document.addEventListener('DOMContentLoaded',()=>{
-  const ctx=document.getElementById('statusChart');
-  if(ctx && window.Chart){
-    new Chart(ctx,{type:'doughnut',data:{labels:['Serviceable (In Use)','Unserviceable (Off-Road)'],datasets:[{data:[<?= $vehActive ?>,<?= $vehOffRoad ?>],backgroundColor:['#28a745','#dc3545']}]} ,options:{plugins:{legend:{position:'bottom'}}}});
-  }
-});
-</script>
-
 <div class="row g-4">
   <div class="col-lg-6">
     <div class="card h-100">
