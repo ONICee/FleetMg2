@@ -46,46 +46,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link href="<?= BASE_URL ?>assets/css/style.css" rel="stylesheet">
 </head>
 <body class="login-page">
-  <div class="container-fluid h-100">
-    <div class="row h-100">
-      <!-- Intro / branding side -->
-      <div class="col-lg-7 d-none d-lg-flex flex-column justify-content-center text-white p-5" style="background:linear-gradient(135deg,#ffda52 0%, #ffcd29 100%);">
-        <div class="mb-4">
-          <img src="<?= BASE_URL ?>assets/images/anambra_logo.png" alt="Anambra State" style="height:80px;">
-          <h1 class="mt-3 fw-bold">ANSG Security Fleet Management</h1>
-          <p class="lead">Safeguarding the operational readiness of our security vehicles through smart maintenance, real-time tracking and data-driven insights.</p>
+  <div class="container h-100 d-flex justify-content-center align-items-center">
+    <div class="card shadow" style="max-width:420px;border-top:5px solid var(--brand-yellow);">
+      <div class="card-body p-4">
+        <div class="text-center mb-3">
+          <img src="<?= BASE_URL ?>assets/images/anambra_logo.png" alt="Anambra State" style="height:60px;">
+          <h4 class="fw-bold mt-3 mb-1">ANSG Security Fleet</h4>
+          <span class="text-muted small">Operational Readiness Portal</span>
         </div>
-        <ul class="list-unstyled fs-5 lh-lg">
-          <li><i class="fa fa-check-circle me-2"></i>Track serviceability & maintenance history</li>
-          <li><i class="fa fa-check-circle me-2"></i>Receive automated reminders before due dates</li>
-          <li><i class="fa fa-check-circle me-2"></i>Monitor vehicle location (GPS-enabled)</li>
-          <li><i class="fa fa-check-circle me-2"></i>Role-based dashboards & in-app notifications</li>
-        </ul>
-      </div>
-
-      <!-- Login form side -->
-      <div class="col-lg-5 d-flex align-items-center justify-content-center p-4">
-        <div class="card shadow w-100" style="max-width:420px;">
-          <div class="card-body p-4">
-            <h3 class="mb-4 text-center">Sign in</h3>
-            <?php if ($error): ?>
-              <div class="alert alert-danger small"><i class="fa fa-triangle-exclamation me-2"></i><?= $error ?></div>
-            <?php endif; ?>
-            <form method="post" autocomplete="off">
-              <div class="mb-3">
-                <label class="form-label">Username</label>
-                <input type="text" name="username" class="form-control" placeholder="Enter username" required autofocus>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
-              </div>
-              <button class="btn btn-brand w-100">Login</button>
-            </form>
+        <p class="small text-muted mb-4 text-center">Login to manage vehicle records, schedule maintenance and monitor fleet performance.</p>
+        <?php if ($error): ?>
+          <div class="alert alert-danger small"><i class="fa fa-triangle-exclamation me-2"></i><?= $error ?></div>
+        <?php endif; ?>
+        <form method="post" autocomplete="off">
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" placeholder="Enter username" required autofocus>
           </div>
-          <div class="card-footer text-center small text-muted">© <?= date('Y') ?> Anambra State Government</div>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+          </div>
+          <button class="btn btn-brand w-100">Login</button>
+        </form>
       </div>
+      <div class="card-footer text-center small text-muted">© <?= date('Y') ?> Anambra State Government</div>
     </div>
   </div>
 </body>
