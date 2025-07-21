@@ -41,6 +41,7 @@ $countInUse    = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE serviceability
 $countOffRoad  = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE serviceability='Off-Road'")->fetchColumn();
 $countWithGPS  = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE last_lat IS NOT NULL")->fetchColumn();
 $countNoGPS    = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE last_lat IS NULL")->fetchColumn();
+$trackingEnabled = get_setting($pdo,'track_auth_type') && get_setting($pdo,'track_auth_type')!=='none' && get_setting($pdo,'track_api_base');
 ?>
 
 <div class="row g-3 mb-4">
@@ -64,6 +65,7 @@ $countNoGPS    = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE last_lat IS NU
       </div>
     </a>
   </div>
+  <?php if($trackingEnabled): ?>
   <div class="col-md-3">
     <a href="index.php?gps=yes" class="text-decoration-none text-dark">
       <div class="card card-stat text-center" data-color="cyan">
@@ -84,6 +86,7 @@ $countNoGPS    = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE last_lat IS NU
       </div>
     </a>
   </div>
+  <?php endif; ?>
 </div>
 
 <div class="d-flex justify-content-between align-items-center mb-3">
