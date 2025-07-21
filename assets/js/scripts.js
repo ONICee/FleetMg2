@@ -9,3 +9,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
   }
 });
+
+$(function(){
+  if($.fn.DataTable){
+    $('.datatable').DataTable({pageLength:25,order:[]});
+  }
+});
