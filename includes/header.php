@@ -37,7 +37,7 @@ require_once __DIR__ . '/../config/security.php';
             <a class="nav-link dropdown-toggle position-relative" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown">
               <i class="bi bi-bell"></i>
               <?php
-              $stmt = $pdo->prepare('SELECT COUNT(*) FROM notifications WHERE (user_id = ? OR user_id IS NULL) AND is_read = 0');
+              $stmt = $pdo->prepare('SELECT COUNT(*) FROM notifications WHERE user_id = ? AND is_read = 0');
               $stmt->execute([$_SESSION['user']['id']]);
               $unread = $stmt->fetchColumn();
               if ($unread): ?>
@@ -87,3 +87,15 @@ require_once __DIR__ . '/../config/security.php';
         </ol>
       </nav>
       <?php endif; ?>
+      <script defer>
+      document.addEventListener('DOMContentLoaded',()=>{
+        const bell=document.getElementById('notifDropdown');
+        if(bell){
+          bell.addEventListener('shown.bs.dropdown',()=>{
+            fetch('<?= BASE_URL ?>modules/notifications/mark_read.php');
+            const badge=bell.querySelector('.badge');
+            if(badge) badge.remove();
+          });
+        }
+      });
+      </script>
