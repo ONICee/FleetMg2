@@ -7,9 +7,11 @@ include __DIR__ . '/../includes/header.php';
 ?>
 <?php
 $vehTotal   = $pdo->query('SELECT COUNT(*) FROM vehicles')->fetchColumn();
+$assigned   = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE agency IS NOT NULL AND agency <> ''")->fetchColumn();
 $vehActive  = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE serviceability='In Use'")->fetchColumn();
 $vehOffRoad = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE serviceability='Off-Road'")->fetchColumn();
-$maintDue   = $pdo->query("SELECT COUNT(*) FROM maintenance WHERE next_date IS NOT NULL AND next_date <= CURDATE() + INTERVAL 30 DAY")->fetchColumn();
+$maintDue   = $pdo->query("SELECT COUNT(*) FROM maintenance WHERE next_date IS NOT NULL AND next_date <= CURDATE() + INTERVAL 30 DAY AND next_date >= CURDATE()")->fetchColumn();
+$maintOver  = $pdo->query("SELECT COUNT(*) FROM maintenance WHERE next_date IS NOT NULL AND next_date < CURDATE()")->fetchColumn();
 ?>
 
 <div class="row g-4 mb-4">
@@ -51,6 +53,29 @@ $maintDue   = $pdo->query("SELECT COUNT(*) FROM maintenance WHERE next_date IS N
         <h2><?= $maintDue ?></h2>
       </div>
     </div>
+    </a>
+  </div>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-md-3">
+    <a href="<?= BASE_URL ?>modules/vehicles/index.php?assigned=yes" class="text-decoration-none text-dark">
+      <div class="card card-stat text-center">
+        <div class="card-body">
+          <h5 class="card-title">Assigned Vehicles</h5>
+          <h2><?= $assigned ?></h2>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3">
+    <a href="<?= BASE_URL ?>modules/maintenance/index.php?status=overdue" class="text-decoration-none text-dark">
+      <div class="card card-stat text-center">
+        <div class="card-body">
+          <h5 class="card-title">Maintenance Overdue</h5>
+          <h2><?= $maintOver ?></h2>
+        </div>
+      </div>
     </a>
   </div>
 </div>
