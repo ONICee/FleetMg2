@@ -57,8 +57,8 @@ $maintDue   = $pdo->query("SELECT COUNT(*) FROM maintenance WHERE next_date IS N
 
 <div class="card mt-4">
   <div class="card-header bg-light">Fleet Serviceability Chart</div>
-  <div class="card-body text-center">
-    <canvas id="statusChart" height="140"></canvas>
+  <div class="card-body d-flex justify-content-center">
+    <canvas id="statusChart" width="220" height="220" style="max-width:220px;"></canvas>
   </div>
 </div>
 
