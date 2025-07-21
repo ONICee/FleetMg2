@@ -22,18 +22,50 @@ body {
   color: #000;
 }
 
+/* ---- Layout ---- */
+.sidebar {
+  width:240px;
+  height:100vh;
+  top:56px; /* below navbar */
+  transition:transform .3s ease-in-out;
+}
+
+/* Desktop default: sidebar visible */
 .content {
-  margin-top:56px; /* navbar height */
-  margin-left:220px; /* sidebar width */
+  margin-left:240px;
+  margin-top:56px;
   padding:1.5rem;
 }
 
-.card-stat {
-  border-left:4px solid var(--brand-color);
-  box-shadow:0 0 .5rem rgba(0,0,0,.05);
+/* Sidebar links */
+.sidebar .nav-link {
+  color:#fff;
+  border-radius:.25rem;
 }
 
-.table thead th {
-  background:#000;
-  color:#fff;
+/* Card stats */
+.card-stat {
+  border:0;
+  background:#fff;
+  border-radius:.5rem;
+  box-shadow:0 0 .75rem rgba(0,0,0,.05);
+  position:relative;
+}
+.card-stat:before {
+  content:'';
+  position:absolute;
+  left:0;top:0;bottom:0;width:4px;
+  background:var(--brand-color);
+  border-top-left-radius:.5rem;
+  border-bottom-left-radius:.5rem;
+}
+.card-stat h2 { font-weight:700; margin:0; color:#000; }
+
+/* Tables */
+.table thead th { background:#000; color:#fff; }
+
+/* ---- Responsive Sidebar ---- */
+@media(max-width:991.98px){
+  body:not(.sidebar-open) .sidebar{ transform:translateX(-100%); }
+  .content{ margin-left:0; }
 }
