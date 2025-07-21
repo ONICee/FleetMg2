@@ -13,12 +13,16 @@ if ($_SESSION['user']['role_id'] > ROLE_DATA_ENTRY) {
 $brand = sanitize($_GET['brand'] ?? '');
 $agency = sanitize($_GET['agency'] ?? '');
 $location = sanitize($_GET['location'] ?? '');
+$serial = sanitize($_GET['serial'] ?? '');
+$assignedParam = isset($_GET['assigned']);
 
 $sql = 'SELECT * FROM vehicles WHERE 1';
 $params = [];
 if ($brand)   { $sql .= ' AND brand LIKE ?';       $params[] = "%$brand%"; }
 if ($agency)  { $sql .= ' AND agency LIKE ?';      $params[] = "%$agency%"; }
 if ($location){ $sql .= ' AND location LIKE ?';    $params[] = "%$location%"; }
+if ($serial){ $sql .= ' AND serial_number LIKE ?'; $params[] = "%$serial%"; }
+if ($assignedParam){ $sql .= " AND agency IS NOT NULL AND agency <> ''"; }
 $sql .= ' ORDER BY created_at DESC';
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
@@ -38,9 +42,10 @@ include __DIR__ . '/../../includes/header.php';
 
 <form class="row g-2 mb-4" method="get">
   <div class="col-md-3"><input type="text" name="brand" value="<?= $brand ?>" placeholder="Brand" class="form-control"></div>
-  <div class="col-md-3"><input type="text" name="agency" value="<?= $agency ?>" placeholder="Agency" class="form-control"></div>
-  <div class="col-md-3"><input type="text" name="location" value="<?= $location ?>" placeholder="Location" class="form-control"></div>
-  <div class="col-md-3 d-grid"><button class="btn btn-dark">Filter</button></div>
+  <div class="col-md-2"><input type="text" name="agency" value="<?= $agency ?>" placeholder="Agency" class="form-control"></div>
+  <div class="col-md-2"><input type="text" name="location" value="<?= $location ?>" placeholder="Location" class="form-control"></div>
+  <div class="col-md-2"><input type="text" name="serial" value="<?= sanitize($_GET['serial'] ?? '') ?>" placeholder="Serial #" class="form-control"></div>
+  <div class="col-md-2 d-grid"><button class="btn btn-dark">Filter</button></div>
 </form>
 
 <table class="table table-bordered table-hover table-sm datatable">

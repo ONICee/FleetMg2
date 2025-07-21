@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$brand, $serial, $year ?: NULL, $engine, $chassis, $tracker_num, $tracker_imei, $agency, $location, $tracker_status, $serviceability, $_SESSION['user']['id']]);
         $vehicleId = $pdo->lastInsertId();
         log_action($pdo, $_SESSION['user']['id'], "Created vehicle #$vehicleId");
-        add_notification($pdo, null, "New vehicle added: $brand ($serial)");
+        add_notification($pdo, null, "New vehicle added: $brand ($serial)", 'NewVehicle');
         header('Location: view.php?id=' . $vehicleId);
         exit;
     }

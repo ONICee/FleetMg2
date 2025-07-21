@@ -79,8 +79,7 @@ function generateMaintenanceNotifications(PDO $pdo)
         $msg = sprintf('%s maintenance due for %s (%s) on %s', $row['type'], $row['brand'], $row['serial_number'], $row['next_date']);
         $check->execute([$msg]);
         if (!$check->fetch()) {
-            // global notification (user_id NULL)
-            add_notification($pdo, null, $msg);
+            add_notification($pdo, null, $msg, 'Maintenance');
         }
     }
 }

@@ -8,8 +8,8 @@ $logs = $q->fetchAll();
 include __DIR__ . '/../../includes/header.php';
 ?>
 <h2>Audit Logs</h2>
-<table class="table table-bordered table-sm">
-  <thead class="table-dark"><tr><th>Date</th><th>User</th><th>Action</th><th>IP</th></tr></thead>
+<table class="table table-bordered table-sm datatable">
+  <thead class="table-dark"><tr><th>Date</th><th>User</th><th>Action</th><th>IP</th><th>URL</th><th>User Agent</th></tr></thead>
   <tbody>
   <?php foreach ($logs as $log): ?>
     <tr>
@@ -17,10 +17,12 @@ include __DIR__ . '/../../includes/header.php';
       <td><?= sanitize($log['username'] ?? 'System') ?></td>
       <td><?= sanitize($log['action']) ?></td>
       <td><?= $log['ip_address'] ?></td>
+      <td><small><?= sanitize($log['request_url']) ?></small></td>
+      <td><small><?= sanitize($log['user_agent']) ?></small></td>
     </tr>
   <?php endforeach; ?>
   <?php if (!$logs): ?>
-    <tr><td colspan="4" class="text-center">No logs.</td></tr>
+    <tr><td colspan="6" class="text-center">No logs.</td></tr>
   <?php endif; ?>
   </tbody>
 </table>
