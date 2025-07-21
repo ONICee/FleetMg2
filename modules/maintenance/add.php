@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare('INSERT INTO maintenance (vehicle_id,type,description,maintenance_date,next_date,created_by) VALUES (?,?,?,?,?,?)');
         $stmt->execute([$vehicle_id, $type, $desc, $date, $next_date, $_SESSION['user']['id']]);
         log_action($pdo, $_SESSION['user']['id'], "Added $type maintenance to vehicle #$vehicle_id");
-        add_notification($pdo, null, "$type maintenance recorded for {$vehicle['brand']} ({$vehicle['serial_number']})");
+        add_notification($pdo, null, "$type maintenance recorded for {$vehicle['brand']} ({$vehicle['serial_number']})", 'Maintenance');
         header('Location: ../vehicles/view.php?id=' . $vehicle_id);
         exit;
     }

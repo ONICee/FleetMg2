@@ -16,6 +16,6 @@ if (!$v) {
 $stmt = $pdo->prepare('DELETE FROM vehicles WHERE id = ?');
 $stmt->execute([$id]);
 log_action($pdo, $_SESSION['user']['id'], "Deleted vehicle #$id");
-add_notification($pdo, null, "Vehicle removed: {$v['brand']} ({$v['serial_number']})");
+add_notification($pdo, null, "Vehicle removed: {$v['brand']} ({$v['serial_number']})", 'Vehicle');
 header('Location: index.php');
 exit;

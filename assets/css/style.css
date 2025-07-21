@@ -69,3 +69,5 @@ body {
   body:not(.sidebar-open) .sidebar{ transform:translateX(-100%); }
   .content{ margin-left:0; }
 }
+
+.chart-card{max-width:350px;margin:auto;}

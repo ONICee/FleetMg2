@@ -8,10 +8,24 @@ if ($_SESSION['user']['role_id'] > ROLE_ADMIN) {
 }
 $q = $pdo->query('SELECT m.*, v.brand, v.serial_number FROM maintenance m JOIN vehicles v ON m.vehicle_id = v.id ORDER BY m.maintenance_date DESC');
 $rows = $q->fetchAll();
+// type filter param
+$typeParam = sanitize($_GET['type'] ?? '');
+$typeFilterSQL = '';
+if($typeParam){
+  $q=$pdo->prepare('SELECT m.*, v.brand, v.serial_number FROM maintenance m JOIN vehicles v ON m.vehicle_id = v.id WHERE m.type = ? ORDER BY m.maintenance_date DESC');
+  $q->execute([$typeParam]);
+  $rows=$q->fetchAll();
+}
 $breadcrumbs=['Dashboard'=>BASE_URL,'Maintenance'=>null];
 include __DIR__ . '/../../includes/header.php';
 ?>
-<h2>All Maintenance Records</h2>
+<h2>Maintenance Records</h2>
+<div class="mb-3">
+  <a href="index.php" class="btn btn-sm <?= !$typeParam?'btn-primary':'btn-outline-primary' ?> me-1">All</a>
+  <?php foreach(['Scheduled','Unscheduled','Overhaul'] as $t): ?>
+    <a href="index.php?type=<?= $t ?>" class="btn btn-sm <?= $typeParam==$t?'btn-primary':'btn-outline-primary' ?> me-1"><?= $t ?></a>
+  <?php endforeach; ?>
+</div>
 <table class="table table-bordered table-sm datatable">
   <thead class="table-dark">
     <tr>
