@@ -10,6 +10,7 @@ require_once __DIR__ . '/../config/security.php';
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <!-- DataTables & additional libs -->
   <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <link href="<?= BASE_URL ?>assets/css/style.css" rel="stylesheet">
 
@@ -73,3 +74,16 @@ require_once __DIR__ . '/../config/security.php';
   <div class="d-flex">
     <?php include __DIR__ . '/sidebar.php'; ?>
     <main class="content flex-grow-1">
+      <?php if(isset($breadcrumbs) && is_array($breadcrumbs)): ?>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <?php foreach($breadcrumbs as $label=>$link): ?>
+            <?php if($link): ?>
+              <li class="breadcrumb-item"><a href="<?= $link ?>"><?= $label ?></a></li>
+            <?php else: ?>
+              <li class="breadcrumb-item active" aria-current="page"><?= $label ?></li>
+            <?php endif; ?>
+          <?php endforeach; ?>
+        </ol>
+      </nav>
+      <?php endif; ?>

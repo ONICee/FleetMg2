@@ -8,6 +8,7 @@ if ($_SESSION['user']['role_id'] > ROLE_ADMIN) {
 }
 $q = $pdo->query('SELECT m.*, v.brand, v.serial_number FROM maintenance m JOIN vehicles v ON m.vehicle_id = v.id ORDER BY m.maintenance_date DESC');
 $rows = $q->fetchAll();
+$breadcrumbs=['Dashboard'=>BASE_URL,'Maintenance'=>null];
 include __DIR__ . '/../../includes/header.php';
 ?>
 <h2>All Maintenance Records</h2>

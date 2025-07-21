@@ -4,6 +4,8 @@ require_once __DIR__ . '/../../config/security.php';
 require_login();
 require_role(ROLE_SUPER_ADMIN);
 
+$breadcrumbs=['Dashboard'=>BASE_URL,'Users'=>null];
+
 $users = $pdo->query('SELECT u.id, u.username, r.name AS role_name, u.created_at FROM users u JOIN roles r ON u.role_id = r.id ORDER BY u.created_at DESC')->fetchAll();
 include __DIR__ . '/../../includes/header.php';
 ?>
