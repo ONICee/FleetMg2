@@ -55,20 +55,31 @@ $lo = $lastOver->fetch();
 <table class="table table-bordered table-sm">
   <thead class="table-light">
     <tr>
-      <th>Date</th><th>Type</th><th>Description</th><th>Next Due</th>
+      <th>Date</th><th>Type</th><th>Description</th><th>Next Due</th><th>Status</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach ($maintenance as $m): ?>
-      <tr>
+      <?php
+        $overdue = ($m['next_date'] && $m['next_date'] < date('Y-m-d'));
+        $rowClass = $overdue ? 'table-danger' : '';
+      ?>
+      <tr class="<?= $rowClass ?>">
         <td><?= $m['maintenance_date'] ?></td>
         <td><?= $m['type'] ?></td>
         <td><?= nl2br(sanitize($m['description'])) ?></td>
         <td><?= $m['next_date'] ?></td>
+        <td class="text-center">
+          <?php if($overdue): ?>
+            <span class="text-danger"><i class="fa fa-exclamation-circle"></i> Overdue</span>
+          <?php else: ?>
+            <span class="text-success"><i class="fa fa-check-circle"></i></span>
+          <?php endif; ?>
+        </td>
       </tr>
     <?php endforeach; ?>
     <?php if (!$maintenance): ?>
-      <tr><td colspan="4" class="text-center">No maintenance records.</td></tr>
+      <tr><td colspan="5" class="text-center">No maintenance records.</td></tr>
     <?php endif; ?>
   </tbody>
 </table>
