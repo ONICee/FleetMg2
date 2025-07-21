@@ -63,4 +63,23 @@ function add_notification(PDO $pdo, $userId = null, $message)
     $stmt = $pdo->prepare('INSERT INTO notifications (user_id, message) VALUES (?, ?)');
     $stmt->execute([$userId, $message]);
 }
+
+// Generate maintenance due/overdue notifications (runs once per request)
+function generateMaintenanceNotifications(PDO $pdo)
+{
+    // Find maintenance records whose next_date is overdue or today
+    $stmt = $pdo->query("SELECT m.id, m.type, m.next_date, v.brand, v.serial_number FROM maintenance m JOIN vehicles v ON m.vehicle_id = v.id WHERE m.next_date IS NOT NULL AND m.next_date <= CURDATE()");
+    $check = $pdo->prepare('SELECT id FROM notifications WHERE message = ? LIMIT 1');
+    foreach ($stmt->fetchAll() as $row) {
+        $msg = sprintf('%s maintenance due for %s (%s) on %s', $row['type'], $row['brand'], $row['serial_number'], $row['next_date']);
+        $check->execute([$msg]);
+        if (!$check->fetch()) {
+            // global notification (user_id NULL)
+            add_notification($pdo, null, $msg);
+        }
+    }
+}
+
+// Run generator once per request (after DB connection ready)
+generateMaintenanceNotifications($pdo);
 ?>
