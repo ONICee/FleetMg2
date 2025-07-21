@@ -24,7 +24,10 @@ require_once __DIR__ . '/../config/security.php';
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
       <button class="btn btn-outline-light d-lg-none me-2" id="sidebarToggle"><i class="bi bi-list"></i></button>
-      <a class="navbar-brand" href="<?= BASE_URL ?>">Fleet</a>
+      <a class="navbar-brand d-flex align-items-center" href="<?= BASE_URL ?>">
+        <img src="<?= BASE_URL ?>assets/images/anambra_logo.png" alt="Anambra State" height="30" class="me-2">
+        Fleet Management
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto align-items-center">

@@ -14,36 +14,44 @@ $maintDue   = $pdo->query("SELECT COUNT(*) FROM maintenance WHERE next_date IS N
 
 <div class="row g-4 mb-4">
   <div class="col-md-3">
+    <a href="<?= BASE_URL ?>modules/vehicles/index.php" class="text-decoration-none text-dark">
     <div class="card card-stat text-center">
       <div class="card-body">
         <h5 class="card-title">Total Vehicles</h5>
         <h2><?= $vehTotal ?></h2>
       </div>
     </div>
+    </a>
   </div>
   <div class="col-md-3">
+    <a href="<?= BASE_URL ?>modules/vehicles/index.php?serviceability=In+Use" class="text-decoration-none text-dark">
     <div class="card card-stat text-center">
       <div class="card-body">
         <h5 class="card-title">Active (In Use)</h5>
         <h2><?= $vehActive ?></h2>
       </div>
     </div>
+    </a>
   </div>
   <div class="col-md-3">
+    <a href="<?= BASE_URL ?>modules/vehicles/index.php?serviceability=Off-Road" class="text-decoration-none text-dark">
     <div class="card card-stat text-center">
       <div class="card-body">
         <h5 class="card-title">Off-Road</h5>
         <h2><?= $vehOffRoad ?></h2>
       </div>
     </div>
+    </a>
   </div>
   <div class="col-md-3">
+    <a href="<?= BASE_URL ?>modules/maintenance/index.php" class="text-decoration-none text-dark">
     <div class="card card-stat text-center">
       <div class="card-body">
         <h5 class="card-title">Maintenance Due &lt;30d</h5>
         <h2><?= $maintDue ?></h2>
       </div>
     </div>
+    </a>
   </div>
 </div>
 
@@ -58,7 +66,7 @@ $maintDue   = $pdo->query("SELECT COUNT(*) FROM maintenance WHERE next_date IS N
 document.addEventListener('DOMContentLoaded',()=>{
   const ctx=document.getElementById('statusChart');
   if(ctx && window.Chart){
-    new Chart(ctx,{type:'doughnut',data:{labels:['In Use','Off-Road'],datasets:[{data:[<?= $vehActive ?>,<?= $vehOffRoad ?>],backgroundColor:['#28a745','#dc3545']}]} ,options:{plugins:{legend:{position:'bottom'}}}});
+    new Chart(ctx,{type:'doughnut',data:{labels:['Serviceable (In Use)','Unserviceable (Off-Road)'],datasets:[{data:[<?= $vehActive ?>,<?= $vehOffRoad ?>],backgroundColor:['#28a745','#dc3545']}]} ,options:{plugins:{legend:{position:'bottom'}}}});
   }
 });
 </script>

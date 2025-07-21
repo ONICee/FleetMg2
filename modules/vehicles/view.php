@@ -28,6 +28,24 @@ include __DIR__ . '/../../includes/header.php';
   <tr><th>Tracker Status</th><td><?= $vehicle['tracker_status'] ?></td></tr>
   <tr><th>Serviceability</th><td><?= $vehicle['serviceability'] ?></td></tr>
 </table>
+
+<?php
+$lastSched = $pdo->prepare("SELECT maintenance_date,next_date FROM maintenance WHERE vehicle_id=? AND type='Scheduled' ORDER BY maintenance_date DESC LIMIT 1");
+$lastSched->execute([$id]);
+$ls = $lastSched->fetch();
+
+$lastOver = $pdo->prepare("SELECT maintenance_date,next_date FROM maintenance WHERE vehicle_id=? AND type='Overhaul' ORDER BY maintenance_date DESC LIMIT 1");
+$lastOver->execute([$id]);
+$lo = $lastOver->fetch();
+?>
+
+<h4 class="mt-4">Maintenance Schedule</h4>
+<table class="table table-bordered w-50">
+  <tr><th>Last Scheduled Maintenance</th><td><?= $ls['maintenance_date'] ?? '-' ?></td></tr>
+  <tr><th>Next Scheduled Maintenance</th><td><?= $ls['next_date'] ?? '-' ?></td></tr>
+  <tr><th>Last Overhaul</th><td><?= $lo['maintenance_date'] ?? '-' ?></td></tr>
+  <tr><th>Next Overhaul</th><td><?= $lo['next_date'] ?? '-' ?></td></tr>
+</table>
 <div class="d-flex justify-content-between align-items-center mb-2">
   <h3>Maintenance History</h3>
   <?php if ($_SESSION['user']['role_id'] <= ROLE_DATA_ENTRY): ?>
