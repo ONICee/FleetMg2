@@ -1,7 +1,7 @@
 <?php
 $role = $_SESSION['user']['role_id'];
 ?>
-<aside class="sidebar bg-black text-white position-fixed" style="width:220px; height:100vh; top:56px;">
+<aside class="sidebar bg-black text-white position-fixed">
   <ul class="nav nav-pills flex-column p-3 pt-4">
     <li class="nav-item mb-2"><a class="nav-link text-white" href="<?= BASE_URL ?>">Dashboard</a></li>
     <?php if ($role <= ROLE_ADMIN): ?>
