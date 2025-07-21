@@ -22,7 +22,12 @@ include __DIR__ . '/../../includes/header.php';
       <td><?= sanitize($u['username']) ?></td>
       <td><?= sanitize($u['role_name']) ?></td>
       <td><?= $u['created_at'] ?></td>
-      <td><a href="edit.php?id=<?= $u['id'] ?>" class="btn btn-sm btn-dark">Edit</a></td>
+      <td>
+        <a href="edit.php?id=<?= $u['id'] ?>" class="btn btn-sm btn-dark me-1"><i class="fa fa-edit"></i></a>
+        <?php if($u['id']!=1): ?>
+        <a href="delete.php?id=<?= $u['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this user?');"><i class="fa fa-trash"></i></a>
+        <?php endif; ?>
+      </td>
     </tr>
   <?php endforeach; ?>
   </tbody>
