@@ -24,6 +24,8 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $vehicles = $stmt->fetchAll();
 
+$breadcrumbs=['Dashboard'=>BASE_URL,'Vehicles'=>null];
+
 include __DIR__ . '/../../includes/header.php';
 ?>
 <div class="d-flex justify-content-between align-items-center mb-3">
