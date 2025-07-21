@@ -15,6 +15,7 @@ $agency = sanitize($_GET['agency'] ?? '');
 $location = sanitize($_GET['location'] ?? '');
 $serial = sanitize($_GET['serial'] ?? '');
 $assignedParam = isset($_GET['assigned']);
+$gps = sanitize($_GET['gps'] ?? '');
 
 $sql = 'SELECT * FROM vehicles WHERE 1';
 $params = [];
@@ -24,6 +25,8 @@ if ($location){ $sql .= ' AND location LIKE ?';    $params[] = "%$location%"; }
 if ($serial){ $sql .= ' AND serial_number LIKE ?'; $params[] = "%$serial%"; }
 if ($assignedParam){ $sql .= " AND agency IS NOT NULL AND agency <> ''"; }
 $sql .= ' ORDER BY created_at DESC';
+if($gps=='yes'){$sql.=' AND last_lat IS NOT NULL';}
+if($gps=='no'){$sql.=' AND last_lat IS NULL';}
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $vehicles = $stmt->fetchAll();
@@ -32,6 +35,57 @@ $breadcrumbs=['Dashboard'=>BASE_URL,'Vehicles'=>null];
 
 include __DIR__ . '/../../includes/header.php';
 ?>
+<?php
+// KPI counts
+$countInUse    = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE serviceability='In Use'")->fetchColumn();
+$countOffRoad  = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE serviceability='Off-Road'")->fetchColumn();
+$countWithGPS  = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE last_lat IS NOT NULL")->fetchColumn();
+$countNoGPS    = $pdo->query("SELECT COUNT(*) FROM vehicles WHERE last_lat IS NULL")->fetchColumn();
+?>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <a href="index.php?serviceability=In+Use" class="text-decoration-none text-dark">
+      <div class="card card-stat text-center" data-color="green">
+        <div class="card-body">
+          <h5 class="card-title">Serviceable (In-Use)</h5>
+          <h2><?= $countInUse ?></h2>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3">
+    <a href="index.php?serviceability=Off-Road" class="text-decoration-none text-dark">
+      <div class="card card-stat text-center" data-color="red">
+        <div class="card-body">
+          <h5 class="card-title">Un-serviceable</h5>
+          <h2><?= $countOffRoad ?></h2>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3">
+    <a href="index.php?gps=yes" class="text-decoration-none text-dark">
+      <div class="card card-stat text-center" data-color="cyan">
+        <div class="card-body">
+          <h5 class="card-title">With GPS Fix</h5>
+          <h2><?= $countWithGPS ?></h2>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-3">
+    <a href="index.php?gps=no" class="text-decoration-none text-dark">
+      <div class="card card-stat text-center" data-color="blue">
+        <div class="card-body">
+          <h5 class="card-title">No GPS Fix</h5>
+          <h2><?= $countNoGPS ?></h2>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h2>Vehicle Registry</h2>
   <div>
@@ -42,9 +96,9 @@ include __DIR__ . '/../../includes/header.php';
 
 <form class="row g-2 mb-4" method="get">
   <div class="col-md-3"><input type="text" name="brand" value="<?= $brand ?>" placeholder="Brand" class="form-control"></div>
-  <div class="col-md-2"><input type="text" name="agency" value="<?= $agency ?>" placeholder="Agency" class="form-control"></div>
-  <div class="col-md-2"><input type="text" name="location" value="<?= $location ?>" placeholder="Location" class="form-control"></div>
-  <div class="col-md-2"><input type="text" name="serial" value="<?= sanitize($_GET['serial'] ?? '') ?>" placeholder="Serial #" class="form-control"></div>
+  <div class="col-md-3"><input type="text" name="agency" value="<?= $agency ?>" placeholder="Agency" class="form-control"></div>
+  <div class="col-md-3"><input type="text" name="location" value="<?= $location ?>" placeholder="Location" class="form-control"></div>
+  <div class="col-md-3"><input type="text" name="serial" value="<?= $serial ?>" placeholder="Serial #" class="form-control"></div>
   <div class="col-md-2 d-grid"><button class="btn btn-dark">Filter</button></div>
 </form>
 
