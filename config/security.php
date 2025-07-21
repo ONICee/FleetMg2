@@ -54,14 +54,19 @@ function require_role($roleId)
 
 function log_action(PDO $pdo, $userId, $action)
 {
-    $stmt = $pdo->prepare('INSERT INTO audit_logs (user_id, action, ip_address) VALUES (?,?,?)');
-    $stmt->execute([$userId, $action, $_SERVER['REMOTE_ADDR'] ?? 'CLI']);
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? ($_SERVER['REMOTE_ADDR'] ?? 'CLI');
+    $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
+    $url = $_SERVER['REQUEST_URI'] ?? '';
+    $params = json_encode($_REQUEST ?? []);
+    $stmt = $pdo->prepare('INSERT INTO audit_logs (user_id, action, ip_address, user_agent, request_url, request_params) VALUES (?,?,?,?,?,?)');
+    $stmt->execute([$userId, $action, $ip, $ua, $url, $params]);
 }
 
-function add_notification(PDO $pdo, $userId = null, $message)
+function add_notification(PDO $pdo, $userId = null, $message, $type='System')
 {
-    $stmt = $pdo->prepare('INSERT INTO notifications (user_id, message) VALUES (?, ?)');
-    $stmt->execute([$userId, $message]);
+    // ensure column exists
+    $stmt = $pdo->prepare('INSERT INTO notifications (user_id, message, type) VALUES (?, ?, ?)');
+    $stmt->execute([$userId, $message, $type]);
 }
 
 // Generate maintenance due/overdue notifications (runs once per request)
