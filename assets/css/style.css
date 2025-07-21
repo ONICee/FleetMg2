@@ -53,3 +53,5 @@ body{font-family:var(--font-main);background:var(--surface-alt);}
 .badge-notif{background:var(--brand-yellow);color:#000;font-weight:700;}
 
 .chart-card{max-width:350px;margin:auto;}
+
+.login-page{background:var(--surface-alt);}

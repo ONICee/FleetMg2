@@ -40,34 +40,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Login – Fleet Management</title>
+  <title>Login – ANSG Security Fleet</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link href="<?= BASE_URL ?>assets/css/style.css" rel="stylesheet">
 </head>
-<body class="bg-light d-flex align-items-center" style="height:100vh;">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-4">
-        <div class="card shadow">
-          <div class="card-header text-center" style="background:<?= BRAND_COLOR ?>;">
-            <strong>Fleet Management</strong>
-          </div>
-          <div class="card-body">
+<body class="login-page">
+  <div class="container-fluid h-100">
+    <div class="row h-100">
+      <!-- Intro / branding side -->
+      <div class="col-lg-7 d-none d-lg-flex flex-column justify-content-center text-white p-5" style="background:linear-gradient(135deg,#ffda52 0%, #ffcd29 100%);">
+        <div class="mb-4">
+          <img src="<?= BASE_URL ?>assets/images/anambra_logo.png" alt="Anambra State" style="height:80px;">
+          <h1 class="mt-3 fw-bold">ANSG Security Fleet Management</h1>
+          <p class="lead">Safeguarding the operational readiness of our security vehicles through smart maintenance, real-time tracking and data-driven insights.</p>
+        </div>
+        <ul class="list-unstyled fs-5 lh-lg">
+          <li><i class="fa fa-check-circle me-2"></i>Track serviceability & maintenance history</li>
+          <li><i class="fa fa-check-circle me-2"></i>Receive automated reminders before due dates</li>
+          <li><i class="fa fa-check-circle me-2"></i>Monitor vehicle location (GPS-enabled)</li>
+          <li><i class="fa fa-check-circle me-2"></i>Role-based dashboards & in-app notifications</li>
+        </ul>
+      </div>
+
+      <!-- Login form side -->
+      <div class="col-lg-5 d-flex align-items-center justify-content-center p-4">
+        <div class="card shadow w-100" style="max-width:420px;">
+          <div class="card-body p-4">
+            <h3 class="mb-4 text-center">Sign in</h3>
             <?php if ($error): ?>
-              <div class="alert alert-danger"><?= $error ?></div>
+              <div class="alert alert-danger small"><i class="fa fa-triangle-exclamation me-2"></i><?= $error ?></div>
             <?php endif; ?>
             <form method="post" autocomplete="off">
               <div class="mb-3">
                 <label class="form-label">Username</label>
-                <input type="text" name="username" class="form-control" required autofocus>
+                <input type="text" name="username" class="form-control" placeholder="Enter username" required autofocus>
               </div>
               <div class="mb-3">
                 <label class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" required>
+                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
               </div>
-              <button class="btn btn-dark w-100">Login</button>
+              <button class="btn btn-brand w-100">Login</button>
             </form>
           </div>
+          <div class="card-footer text-center small text-muted">© <?= date('Y') ?> Anambra State Government</div>
         </div>
       </div>
     </div>
