@@ -10,6 +10,7 @@ $role = $_SESSION['user']['role_id'];
     <?php endif; ?>
     <li class="nav-item mb-2"><a class="nav-link text-white" href="<?= BASE_URL ?>modules/notifications/index.php">Notifications</a></li>
     <?php if ($role == ROLE_SUPER_ADMIN): ?>
+      <li class="nav-item mb-2"><a class="nav-link text-white" href="<?= BASE_URL ?>modules/users/index.php">Users</a></li>
       <li class="nav-item mb-2"><a class="nav-link text-white" href="<?= BASE_URL ?>settings/general.php">Settings</a></li>
       <li class="nav-item mb-2"><a class="nav-link text-white" href="<?= BASE_URL ?>modules/logs/index.php">Audit Logs</a></li>
     <?php endif; ?>
