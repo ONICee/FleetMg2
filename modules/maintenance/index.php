@@ -19,7 +19,10 @@ if($typeParam){
 $breadcrumbs=['Dashboard'=>BASE_URL,'Maintenance'=>null];
 include __DIR__ . '/../../includes/header.php';
 ?>
-<h2>Maintenance Records</h2>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Maintenance Records</h2>
+  <a href="export_csv.php?type=<?= urlencode($_GET['type']??'') ?>" class="btn btn-outline-secondary"><i class="fa fa-download me-1"></i> CSV</a>
+</div>
 <div class="mb-3">
   <a href="index.php" class="btn btn-sm <?= !$typeParam?'btn-primary':'btn-outline-primary' ?> me-1">All</a>
   <?php foreach(['Scheduled','Unscheduled','Overhaul'] as $t): ?>

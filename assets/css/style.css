@@ -43,8 +43,10 @@ body{font-family:var(--font-main);background:var(--surface-alt);}
 .btn-brand:hover{background:#e6b818;color:#000;}
 
 /* Breadcrumb */
-.breadcrumb{--bs-breadcrumb-divider:'\f054';font-size:.85rem;font-weight:500;color:#6c757d;font-family:"Font Awesome 6 Free";}
-.breadcrumb a{color:#6c757d;text-decoration:none;}
+.breadcrumb{font-size:.85rem;font-weight:500;margin-bottom:1rem;}
+.breadcrumb-item+.breadcrumb-item::before{content:'\f105';font-family:"Font Awesome 6 Free";font-weight:900;color:#adb5bd;padding-right:.4rem;}
+.breadcrumb a{color:#495057;text-decoration:none;}
+.breadcrumb a:hover{text-decoration:underline;}
 
 /* Badge notification */
 .badge-notif{background:var(--brand-yellow);color:#000;font-weight:700;}
