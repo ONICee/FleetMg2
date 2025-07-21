@@ -17,7 +17,7 @@ include __DIR__ . '/../../includes/header.php';
       <td><?= sanitize($log['username'] ?? 'System') ?></td>
       <td><?= sanitize($log['action']) ?></td>
       <td><?= $log['ip_address'] ?></td>
-      <td><small><?= sanitize($log['request_url']) ?></small></td>
+      <td><small><?= sanitize($log['url'] ?? '') ?></small></td>
       <td><small><?= sanitize($log['user_agent']) ?></small></td>
     </tr>
   <?php endforeach; ?>
