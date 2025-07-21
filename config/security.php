@@ -84,4 +84,12 @@ function generateMaintenanceNotifications(PDO $pdo)
 
 // Run generator once per request (after DB connection ready)
 generateMaintenanceNotifications($pdo);
+
+if(!function_exists('get_setting')){
+function get_setting(PDO $pdo,$key){
+  static $stm=null;
+  if(!$stm){$stm=$pdo->prepare('SELECT value FROM settings WHERE `key`=? LIMIT 1');}
+  $stm->execute([$key]);
+  return $stm->fetchColumn();
+}}
 ?>
