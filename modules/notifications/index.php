@@ -8,17 +8,20 @@
  $all = $pdo->prepare('SELECT * FROM notifications WHERE user_id = ? OR user_id IS NULL ORDER BY created_at DESC');
  $all->execute([$userId]);
  $notes=$all->fetchAll();
- $byType=[];foreach($notes as $n){$byType[$n['type']][]=$n;}
+ $byType=[];foreach($notes as $n){$byType[$n['notif_type']][]=$n;}
+ // ensure order tabs
+ $categories=['maintenance','fleet','system'];
+ $ordered=[];foreach($categories as $c){if(isset($byType[$c])){$ordered[$c]=$byType[$c];}}
  include __DIR__ . '/../../includes/header.php';
 ?>
 <h2>Notifications</h2>
 <ul class="nav nav-tabs mb-3" role="tablist">
- <?php $i=0; foreach($byType as $type=>$arr): ?>
+ <?php $i=0; foreach($ordered as $type=>$arr): ?>
    <li class="nav-item"><button class="nav-link <?= $i==0?'active':'' ?>" data-bs-toggle="tab" data-bs-target="#tab<?= $i ?>" type="button"><?= ucfirst($type) ?> <span class="badge bg-secondary ms-1"><?= count($arr) ?></span></button></li>
  <?php $i++; endforeach; ?>
 </ul>
 <div class="tab-content">
-<?php $i=0; foreach($byType as $type=>$arr): ?>
+<?php $i=0; foreach($ordered as $type=>$arr): ?>
   <div class="tab-pane fade <?= $i==0?'show active':'' ?>" id="tab<?= $i ?>">
     <table class="table table-bordered table-sm">
       <thead class="table-light"><tr><th>Message</th><th>Date</th></tr></thead>
