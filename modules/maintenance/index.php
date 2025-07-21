@@ -19,6 +19,19 @@ if($typeParam){
 $breadcrumbs=['Dashboard'=>BASE_URL,'Maintenance'=>null];
 include __DIR__ . '/../../includes/header.php';
 ?>
+<?php
+$cntScheduled = $pdo->query("SELECT COUNT(*) FROM maintenance WHERE type='Scheduled'")->fetchColumn();
+$cntUnscheduled = $pdo->query("SELECT COUNT(*) FROM maintenance WHERE type='Unscheduled'")->fetchColumn();
+$cntOverhaul = $pdo->query("SELECT COUNT(*) FROM maintenance WHERE type='Overhaul'")->fetchColumn();
+$cntOverdue = $pdo->query("SELECT COUNT(*) FROM maintenance WHERE next_date IS NOT NULL AND next_date < CURDATE()")->fetchColumn();
+?>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="card card-stat text-center" data-color="blue"><div class="card-body"><h5 class="card-title">Scheduled</h5><h2><?= $cntScheduled ?></h2></div></div></div>
+  <div class="col-md-3"><div class="card card-stat text-center" data-color="yellow"><div class="card-body"><h5 class="card-title">Unscheduled</h5><h2><?= $cntUnscheduled ?></h2></div></div></div>
+  <div class="col-md-3"><div class="card card-stat text-center" data-color="cyan"><div class="card-body"><h5 class="card-title">Overhaul</h5><h2><?= $cntOverhaul ?></h2></div></div></div>
+  <div class="col-md-3"><div class="card card-stat text-center" data-color="red"><div class="card-body"><h5 class="card-title">Overdue</h5><h2><?= $cntOverdue ?></h2></div></div></div>
+</div>
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h2>Maintenance Records</h2>
   <a href="export_csv.php?type=<?= urlencode($_GET['type']??'') ?>" class="btn btn-outline-secondary"><i class="fa fa-download me-1"></i> CSV</a>
@@ -37,10 +50,17 @@ include __DIR__ . '/../../includes/header.php';
   </thead>
   <tbody>
     <?php foreach ($rows as $r): ?>
-      <tr>
+      <?php
+        $rowClass = '';
+        if($r['type']=='Scheduled') $rowClass='table-primary';
+        elseif($r['type']=='Unscheduled') $rowClass='table-warning';
+        elseif($r['type']=='Overhaul') $rowClass='table-info';
+        if($r['next_date'] && $r['next_date']<date('Y-m-d')) $rowClass='table-danger';
+      ?>
+      <tr class="<?= $rowClass ?>">
         <td><?= $r['maintenance_date'] ?></td>
         <td><a href="../vehicles/view.php?id=<?= $r['vehicle_id'] ?>"><?= sanitize($r['brand']) ?> (<?= sanitize($r['serial_number']) ?>)</a></td>
-        <td><?= $r['type'] ?></td>
+        <td><span class="badge bg-secondary"><?= $r['type'] ?></span></td>
         <td><?= nl2br(sanitize($r['description'])) ?></td>
         <td><?= $r['next_date'] ?></td>
       </tr>

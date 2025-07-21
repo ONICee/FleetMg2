@@ -31,6 +31,7 @@ body{font-family:var(--font-main);background:var(--surface-alt);}
 .card-stat[data-color="blue"]:before{background:#0d6efd;}
 .card-stat[data-color="red"]:before{background:#dc3545;}
 .card-stat[data-color="cyan"]:before{background:#17a2b8;}
+.card-stat[data-color="yellow"]:before{background:#ffc107;}
 .card-stat h2{margin:0;font-weight:700;color:#000;font-size:2rem;}
 .card-stat h5{font-size:.9rem;color:#6c757d;}
 
