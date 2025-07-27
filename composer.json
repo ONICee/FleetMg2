@@ -1,0 +1,19 @@
+{
+    "name": "acme/fleet-management-system",
+    "description": "Fleet Management System – micro-MVC refactor (vanilla PHP)",
+    "type": "project",
+    "require": {
+        "php": ">=8.1",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@php -r \"file_exists('public/.htaccess') || copy('docs/htaccess.dist', 'public/.htaccess');\""
+        ]
+    }
+}
